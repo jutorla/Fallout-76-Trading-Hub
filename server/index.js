@@ -8,6 +8,13 @@ app.use(cors({ origin: true, credentials: true }));
 app.use(cookieParser());
 app.use(express.json());
 
+const ADMIN_TOKEN = process.env.ADMIN_TOKEN || "";
+
+function isAdmin(req) {
+  const token = req.get("x-admin-token") || req.query.token;
+  return ADMIN_TOKEN && token === ADMIN_TOKEN;
+}
+
 app.get("/trades", (req, res) => {
   const all = db.getTrades();
   res.json(all);
@@ -67,6 +74,19 @@ app.delete("/trades/:id", (req, res) => {
 
   db.deleteTrade(id);
   res.json({ ok: true });
+});
+
+app.get("/admin/db", (req, res) => {
+  if (!isAdmin(req)) return res.status(403).json({ error: "Forbidden" });
+  try {
+    const payload = {
+      trades: db.getTrades(),
+    };
+    res.json(payload);
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: "Failed to retrieve DB info" });
+  }
 });
 
 const PORT = process.env.PORT || 4000;
