@@ -20,6 +20,24 @@ app.get("/trades", (req, res) => {
   res.json(all);
 });
 
+app.post("/session", (req, res) => {
+  const { creatorId } = req.body || {};
+  if (!creatorId) return res.status(400).json({ error: "creatorId required" });
+  try {
+    res.cookie("creatorId", creatorId, {
+      maxAge: 60 * 60 * 24 * 365 * 1000,
+      httpOnly: false,
+      sameSite: "none",
+      secure: process.env.NODE_ENV === "production",
+      path: "/",
+    });
+    res.json({ ok: true });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: "Failed to set cookie" });
+  }
+});
+
 app.post("/trades", (req, res) => {
   const t = req.body;
   if (!t || !t.type) return res.status(400).json({ error: "Invalid trade" });

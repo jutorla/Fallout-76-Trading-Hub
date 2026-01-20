@@ -12,12 +12,26 @@ export default function App() {
       .split(";")
       .map((s) => s.trim())
       .find((s) => s.startsWith("creatorId="));
+    let id;
     if (!has) {
-      const id = "c_" + Math.random().toString(36).slice(2, 10);
-      document.cookie = `creatorId=${id}; path=/; max-age=${
-        60 * 60 * 24 * 365
-      }`;
+      id = "c_" + Math.random().toString(36).slice(2, 10);
+      document.cookie = `creatorId=${id}; path=/; max-age=${60 * 60 * 24 * 365}`;
+    } else {
+      id = has.split("=")[1];
     }
+
+    (async () => {
+      try {
+        await fetch(`${API}/session`, {
+          method: "POST",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ creatorId: id }),
+        });
+      } catch (e) {
+        console.error("Failed to sync creatorId with backend", e);
+      }
+    })();
   }, []);
 
   const fetchTrades = async () => {
