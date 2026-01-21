@@ -57,7 +57,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className="min-h-screen p-6">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-2xl font-bold mb-4">F76 Trading Hub</h1>
         <TradeForm onCreated={handleNew} api={API} />

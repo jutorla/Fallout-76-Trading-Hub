@@ -2,4 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
-body { @apply bg-gray-100; }
+:root{
+	--primary-bg: rgb(255, 255, 255); /* backgrounds */
+	--text-primary: #000000; /* main text */
+	--secondary-btn: rgb(199, 151, 75); /* chosen secondary button color */
+}
+
+@layer base {
+	body {
+		background-color: var(--primary-bg);
+		color: var(--text-primary);
+	}
+
+	a { color: var(--text-primary); }
+}
+
+/* Helpers */
+.app-card { background: rgba(43,42,41,0.06); border-radius: .375rem; }
+.text-primary { color: var(--text-primary); }
+.btn-secondary { background: var(--secondary-btn); color: white; padding: .5rem .75rem; border-radius: .375rem; }
+.btn-primary { background: var(--text-primary); color: var(--primary-bg); padding: .5rem .75rem; border-radius: .375rem; }
+.muted { opacity: .85; }
+

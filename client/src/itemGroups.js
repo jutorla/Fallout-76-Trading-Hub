@@ -5,15 +5,15 @@ export const ITEM_GROUPS = [
   },
   {
     label: "Consumables",
-    items: ["Food", "Drugs"],
+    items: ["Food", "Drink", "Aid"],
   },
   {
     label: "Resources",
     items: ["Resource"],
   },
   {
-    label: "Plans & Mods",
-    items: ["Weapon Plan", "Armor Plan", "Furniture Plan", "Cooking Plan"],
+    label: "Plans & Recipes",
+    items: ["Weapon Plan", "Armor Plan", "Blueprints", "Recipes"],
   },
   {
     label: "Mods",
@@ -26,10 +26,12 @@ export const ITEM_GROUPS = [
       "2★ Armor mod",
       "3★ Armor mod",
       "4★ Armor mod",
+      "Weapon Mod",
+      "Armor Mod",
     ],
   },
   {
-    label: "Misc",
-    items: ["Atomat", "Treasure Map", "Gold Bullion", "Fissure Fragment"],
+    label: "Currencies",
+    items: ["Currencies"],
   },
 ];

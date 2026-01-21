@@ -25,15 +25,15 @@ function formatRelative(iso) {
 
 function TradeItem({ t }) {
   return (
-    <div className="border p-2 rounded mb-1 bg-white pr-20 text-sm">
+    <div className="border p-2 rounded mb-1 pr-20 text-sm[#1f1e1d] text-[#c7974b] border-[#c7974b]/20">
       <div className="flex justify-between items-start">
         <div>
-          <div className="font-semibold text-sm">{t.type}</div>
-          <div className="text-xs text-gray-600">
+          <div className="font-semibold text-sm text-[#c7974b]">{t.type}</div>
+          <div className="text-xs text-[#c7974b]/70">
             {formatRelative(t.createdAt)}
           </div>
         </div>
-        <div className="text-xs text-gray-700 flex gap-3 items-center">
+        <div className="text-xs flex gap-3 items-center text-[#c7974b]">
           {t.ingameUser && (
             <div className="flex items-center gap-2">
               <span className="px-2 py-0.5 bg-green-100 text-green-800 rounded text-xs">
@@ -57,24 +57,16 @@ function TradeItem({ t }) {
         <div>
           <div className="font-medium text-xs">I have</div>
           <div className="truncate">
-            {t.item1} <span className="mx-2">×</span> {t.quantity1}
+            {t.item1} {t.description1} <span className="mx-2">×</span>{" "}
+            {t.quantity1}
           </div>
-          {t.description1 && (
-            <div className="mt-1 text-xs text-gray-700 whitespace-pre-wrap break-words">
-              Description: {t.description1}
-            </div>
-          )}
         </div>
         <div>
           <div className="font-medium text-xs">I want</div>
           <div className="truncate">
-            {t.item2} <span className="mx-2">×</span> {t.quantity2}
+            {t.item2} {t.description2} <span className="mx-2">×</span>{" "}
+            {t.quantity2}
           </div>
-          {t.description2 && (
-            <div className="mt-1 text-xs text-gray-700 whitespace-pre-wrap break-words">
-              Description: {t.description2}
-            </div>
-          )}
         </div>
       </div>
     </div>
@@ -166,11 +158,15 @@ export default function TradeList({ trades: allTrades, onDelete }) {
             setGroupItem("all");
             setPage(1);
           }}
-          className="p-2 border rounded"
+          className="p-2 rounded[#1f1e1d] text-[#c7974b] border border-[#c7974b]/30"
         >
           <option value="all">All items</option>
           {ITEM_GROUPS.map((g) => (
-            <option key={g.label} value={g.label}>
+            <option
+              key={g.label}
+              value={g.label}
+              className="bg-[#1f1e1d] text-[#c7974b]"
+            >
               {g.label}
             </option>
           ))}
@@ -182,11 +178,15 @@ export default function TradeList({ trades: allTrades, onDelete }) {
               setGroupItem(e.target.value);
               setPage(1);
             }}
-            className="p-2 border rounded"
+            className="p-2 rounded[#1f1e1d] text-[#c7974b] border border-[#c7974b]/30"
           >
             <option value="all">All in {group}</option>
             {ITEM_GROUPS.find((g) => g.label === group)?.items.map((it) => (
-              <option key={it} value={it}>
+              <option
+                key={it}
+                value={it}
+                className="bg-[#1f1e1d] text-[#c7974b]"
+              >
                 {it}
               </option>
             ))}
@@ -199,12 +199,12 @@ export default function TradeList({ trades: allTrades, onDelete }) {
             setPage(1);
           }}
           placeholder="Search description"
-          className="p-2 border rounded flex-1"
+          className="p-2 rounded[#1f1e1d] text-[#c7974b] border border-[#c7974b]/30 flex-1"
         />
         <select
           value={sort}
           onChange={(e) => setSort(e.target.value)}
-          className="p-2 border rounded"
+          className="p-2 rounded[#1f1e1d] text-[#c7974b] border border-[#c7974b]/30"
         >
           <option value="newest">Newest</option>
           <option value="oldest">Oldest</option>
@@ -237,7 +237,7 @@ export default function TradeList({ trades: allTrades, onDelete }) {
                           onClick={() => handleRemove(t.id)}
                           className="absolute top-2 right-2 text-sm text-red-600 border border-red-200 px-2 py-1 rounded"
                         >
-                          Remove
+                          Delete
                         </button>
                       )}
                     </div>
@@ -250,21 +250,21 @@ export default function TradeList({ trades: allTrades, onDelete }) {
       </div>
 
       <div className="mt-4 flex items-center justify-between">
-        <div className="text-sm text-gray-600">
+        <div className="text-sm text-primary">
           Showing {start + 1}-{Math.min(start + perPage, total)} of {total}
         </div>
         <div className="flex gap-2">
           <button
             disabled={page <= 1}
             onClick={() => setPage((p) => Math.max(1, p - 1))}
-            className="px-3 py-1 border rounded disabled:opacity-50"
+            className="btn-secondary px-3 py-1 disabled:opacity-50"
           >
             Prev
           </button>
           <button
             disabled={page >= pages}
             onClick={() => setPage((p) => Math.min(pages, p + 1))}
-            className="px-3 py-1 border rounded disabled:opacity-50"
+            className="btn-secondary px-3 py-1 disabled:opacity-50"
           >
             Next
           </button>
